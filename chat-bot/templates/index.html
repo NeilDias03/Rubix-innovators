@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale-1.0">
+
+<title>ChatBot</title>
+
+<style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #0a0f1b;
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background-color: #1c2331;
+    }
+    .logo {
+      font-size: 24px;
+      color: #4fc3f7;
+    }
+    .chat-window {
+      margin: 20px;
+      padding: 20px;
+      background: #17212b;
+      border-radius: 15px;
+    }
+    .message {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 10px;
+      background-color: #2a3f54;
+    }
+    .input-field {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      padding: 10px;
+      background-color: #1c2331;
+    }
+    input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="logo">ecommerce*</div>
+        <div class="icons">
+          <!-- Icons can be added here -->
+        </div>
+      </div>
+      <div class="chat-window">
+        <!-- Chat messages go here -->
+        <div class="message">welcome...</div>
+        <div class="message">🚀🌕✨</div>
+      </div>
+      <div class="input-field">
+        
+        <input type="text" id="user-input" placeholder="Type your message...">
+        <div id="chat-container"></div>
+    <button onclick="sendMessage()">Send</button>
+
+      </div>
+<h1>ChatBot</h1>
+
+
+    <script>
+        function sendMessage() {
+            var userText = document.getElementById('user-input').value;
+            var chatContainer = document.getElementById('chat-container');
+            var userMessage = document.createElement('p');
+            userMessage.textContent = "You: " + userText;
+            chatContainer.appendChild(userMessage);
+            document.getElementById('user-input').value = '';
+
+            // Send the user's message to the server to get the bot's response
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/get?msg=" + userText, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var botResponse = document.createElement('p');
+                    botResponse.textContent = "ChatBot: " + xhr.responseText;
+                    chatContainer.appendChild(botResponse);
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
